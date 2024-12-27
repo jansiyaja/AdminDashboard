@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Spinner from "../Components/Spinner";
 import ErrorToast from "../Components/ErrorToast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-    const [toast, setToast] = useState(null);
-    
-    const navigate=useNavigate()
+  const [toast, setToast] = useState(null);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,26 +25,25 @@ const Login = () => {
       return;
     }
 
-      setLoading(true);
-      
-  let message=null
-      if (email !== "jan@gmail.com" || password !== "Jansiya123") {
-        message="error"
+    setLoading(true);
+
+    let message = null;
+    if (email !== "jan@gmail.com" || password !== "Jansiya123") {
+      message = "error";
       setToast({ message: "メールアドレスかパスワードに誤りがあります", type: "error" });
-      } else {
-          message="success"
+    } else {
+      message = "success";
       setToast({ message: "パスワード設定が完了しました", type: "success" });
+      login({ email ,password}); 
     }
 
     setTimeout(() => {
-        
-      setLoading(false)
-      if (message=== "success") {
-        navigate("/dashboard"); 
+      setLoading(false);
+      if (message === "success") {
+        navigate("/dashboard");
       } else {
-        window.location.reload(); 
-        }
-      
+        window.location.reload();
+      }
     }, 1000);
   };
 
@@ -51,18 +51,16 @@ const Login = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  
     if (!email) {
       errors.email = "有効なメールアドレスを入力してください";
     } else if (!emailRegex.test(email)) {
       errors.email = "有効なメールアドレスを入力してください";
     }
 
-  
     if (!password) {
-      errors.password = "有効なメールアドレスを入力してください";
+      errors.password = "パスワードを入力してください";
     } else if (password.length < 6) {
-      errors.password = "有効なメールアドレスを入力してください";
+      errors.password = "パスワードは6文字以上でなければなりません";
     }
 
     return errors;
@@ -97,7 +95,7 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-            className={`mt-1 block w-full p-2 border-2  rounded-lg shadow-sm hover:border-orange-300 caret-orange-400 focus:border-orange-300 focus:ring-orange-400 focus:outline-none ${errors.password ? 'border-red-500' : 'border-gray-300'} `}
+              className={`mt-1 block w-full p-2 border-2  rounded-lg shadow-sm hover:border-orange-300 caret-orange-400 focus:border-orange-300 focus:ring-orange-400 focus:outline-none ${errors.password ? 'border-red-500' : 'border-gray-300'} `}
               required
             />
             {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
@@ -122,12 +120,13 @@ const Login = () => {
               )}
             </button>
           </div>
-        </form>
+              </form>
+              <Link to={'/forget-password'}>
         <p className="text-base text-gray-800 text-center mt-4 font-bold">
           パスワードをお忘れの場合
-        </p>
+                  </p>
+                  </Link>
       </div>
-
 
       {toast && <ErrorToast type={toast.type} message={toast.message} />}
     </div>
