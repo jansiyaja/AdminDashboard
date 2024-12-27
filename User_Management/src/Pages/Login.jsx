@@ -28,7 +28,7 @@ const Login = () => {
     setLoading(true);
 
     let message = null;
-    if (email !== "jan@gmail.com" || password !== "Jansiya123") {
+    if (email !== "admin12345@allright.com" || password !== "Password1234") {
       message = "error";
       setToast({ message: "メールアドレスかパスワードに誤りがあります", type: "error" });
     } else {
