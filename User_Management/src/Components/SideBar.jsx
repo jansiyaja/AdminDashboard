@@ -17,7 +17,7 @@ const SideBar = () => {
           <div
             className={`flex items-center w-full px-4 py-2 hover:bg-orange-100 ${
               activeComponent === "dashboard" ? "text-orange-500 border-orange-500" : "text-gray-700"
-            } border-e-4 border-transparent`}
+            } border-e-4 `}
             onClick={() => setActiveComponent("dashboard")}
           >
             <CiGrid42 className="text-xl mr-3" />
@@ -26,7 +26,7 @@ const SideBar = () => {
           <div
             className={`flex items-center w-full px-4 py-2 hover:bg-orange-100 ${
               activeComponent === "users" ? "text-orange-500 border-orange-500" : "text-gray-700"
-            } border-e-4 border-transparent`}
+            } border-e-4 `}
             onClick={() => setActiveComponent("users")}
           >
             <LuUsersRound className="text-xl mr-3" />
@@ -35,7 +35,7 @@ const SideBar = () => {
           <div
             className={`flex items-center w-full px-4 py-2 hover:bg-orange-100 ${
               activeComponent === "gifts" ? "text-orange-500 border-orange-500" : "text-gray-700"
-            } border-e-4 border-transparent`}
+            } border-e-4 `}
             onClick={() => setActiveComponent("gifts")}
           >
             <HiOutlineGift className="text-xl mr-3" />
